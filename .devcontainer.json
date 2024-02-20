@@ -1,0 +1,16 @@
+{
+    "image": "mcr.microsoft.com/devcontainers/base:jammy",
+    "features": {
+        "ghcr.io/devcontainers/features/dotnet:latest": {}
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.makefile-tools"
+            ]
+        }
+    },
+    "containerEnv": {
+        "DOTNET_NOLOGO": "true"
+    }
+}
