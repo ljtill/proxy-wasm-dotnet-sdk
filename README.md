@@ -1,1 +1,1 @@
-# proxy-wasm-dotnet-sdk
+# WebAssembly for Proxies (.NET SDK)
