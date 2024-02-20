@@ -10,7 +10,15 @@
             ]
         }
     },
+    "mounts": [
+        {
+            "source": "/home/lytill/.bash_aliases",
+            "target": "/root/.bash_aliases",
+            "type": "bind"
+        }
+    ],
     "containerEnv": {
         "DOTNET_NOLOGO": "true"
-    }
+    },
+    "remoteUser": "root"
 }
