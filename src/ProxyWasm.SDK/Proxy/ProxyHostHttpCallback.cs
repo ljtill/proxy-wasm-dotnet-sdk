@@ -67,10 +67,7 @@ public class ProxyHostHttpCallback
         contextState.SetActiveContextId(callerContextId);
 
         var httpCallbacks = pluginContext.HttpCallbacks;
-        if (httpCallbacks.ContainsKey(calloutId))
-        {
-            httpCallbacks.Remove(calloutId);
-        }
+        httpCallbacks.Remove(calloutId);
 
         if (contextState.ContextIdToRootId.ContainsKey(callerContextId))
         {
@@ -78,5 +75,4 @@ public class ProxyHostHttpCallback
             httpCallback.Callback(numHeaders, bodySize, numTrailers);
         }
     }
-
 }

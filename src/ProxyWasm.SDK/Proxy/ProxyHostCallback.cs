@@ -25,44 +25,82 @@ public class ProxyHostCallback
     }
 
     //export proxy_on_context_create
-    public static void ProxyOnContextCreate()
+    public static void ProxyOnContextCreate(ContextState contextState, uint contextId, uint pluginContextId)
     {
-
+        if (pluginContextId == 0)
+        {
+            contextState.CreatePluginContext(contextId);
+        }
+        else if (contextState.CreateHttpContext(contextId, pluginContextId))
+        { }
+        else if (contextState.CreateTcpContext(contextId, pluginContextId))
+        { }
+        else
+        {
+            throw new Exception("Invalid context id on proxy_on_context_create");
+        }
     }
 
     //export proxy_on_log
-    public static void ProxyOnLog()
+    public static void ProxyOnLog(ContextState contextState, uint contextId)
     {
+        var tcpContext = contextState.TcpContexts[contextId];
+        if (tcpContext != null)
+        {
+            contextState.SetActiveContextId(contextId);
+            tcpContext.OnStreamDone();
+        }
 
+        var httpContext = contextState.HttpContexts[contextId];
+        if (httpContext != null)
+        {
+            contextState.SetActiveContextId(contextId);
+            httpContext.OnStreamDone();
+        }
     }
 
     //export proxy_on_done
-    public static void ProxyOnDone()
+    public static bool ProxyOnDone(ContextState contextState, uint contextId)
     {
+        var pluginContext = contextState.PluginContexts[contextId];
+        if (pluginContext != null)
+        {
+            contextState.SetActiveContextId(contextId);
+            return pluginContext.Context.OnPluginDone();
+        }
 
+        return true;
     }
 
     //export proxy_on_delete
-    public static void ProxyOnDelete()
+    public static void ProxyOnDelete(ContextState contextState, uint contextId)
     {
+        contextState.ContextIdToRootId.Remove(contextId);
+        contextState.TcpContexts.Remove(contextId);
+        contextState.HttpContexts.Remove(contextId);
+        contextState.PluginContexts.Remove(contextId);
 
+        // TODO: Implement
     }
 
     //export proxy_on_queue_ready
-    public static void ProxyOnQueueReady()
+    public static void ProxyOnQueueReady(ContextState contextState, uint queueId)
     {
+        var pluginContext = contextState.PluginContexts[queueId];
+        contextState.SetActiveContextId(queueId);
 
+        pluginContext.Context.OnQueueReady(queueId);
     }
 
     //export proxy_on_tick
-    public static void ProxyOnTick()
+    public static void ProxyOnTick(ContextState contextState, uint pluginContextId)
     {
+        var pluginContext = contextState.PluginContexts[pluginContextId];
+        contextState.SetActiveContextId(pluginContextId);
 
+        pluginContext.Context.OnTick();
     }
 
     //export proxy_abi_version_0_2_0
-    public static void ProxyABIVersion()
-    {
-
-    }
+    public static void ProxyABIVersion() { }
 }

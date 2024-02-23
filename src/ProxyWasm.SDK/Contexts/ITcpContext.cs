@@ -1,8 +1,5 @@
 namespace ProxyWasm.SDK;
 
-/// <summary>
-/// ITcpContext is the interface for TCP context.
-/// </summary>
 public interface ITcpContext
 {
     public ActionType OnNewConnection();

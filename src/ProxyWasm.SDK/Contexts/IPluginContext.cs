@@ -1,8 +1,5 @@
 namespace ProxyWasm.SDK;
 
-/// <summary>
-/// IPluginContext is the interface for plugin context.
-/// </summary>
 public interface IPluginContext
 {
     public OnPluginStartType OnPluginStart(int pluginConfigurationSize);

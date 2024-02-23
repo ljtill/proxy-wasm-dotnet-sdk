@@ -1,11 +1,8 @@
 namespace ProxyWasm.SDK;
 
-/// <summary>
-/// DefaultVMContext is the default implementation of IVMContext.
-/// </summary>
 public class DefaultVMContext : IVMContext
 {
-    public bool OnVMStart(int vmConfigurationSize)
+    public OnVMStartType OnVMStart(int vmConfigurationSize)
     {
         return OnVMStartType.StartStatusOK;
     }
@@ -16,12 +13,9 @@ public class DefaultVMContext : IVMContext
     }
 }
 
-/// <summary>
-/// DefaultPluginContext is the default implementation of IPluginContext.
-/// </summary>
 public class DefaultPluginContext : IPluginContext
 {
-    public bool OnPluginStart(int pluginConfigurationSize)
+    public OnPluginStartType OnPluginStart(int pluginConfigurationSize)
     {
         return OnPluginStartType.StartStatusOK;
     }
@@ -39,28 +33,25 @@ public class DefaultPluginContext : IPluginContext
     {
     }
 
-    public ITcpContext? NewTcpContext(uint contextID)
+    public ITcpContext NewTcpContext(uint contextID)
     {
-        return null;
+        return new DefaultTcpContext();
     }
 
-    public IHttpContext? NewHttpContext(uint contextID)
+    public IHttpContext NewHttpContext(uint contextID)
     {
-        return null;
+        return new DefaultHttpContext();
     }
 }
 
-/// <summary>
-/// DefaultTcpContext is the default implementation of ITcpContext.
-/// </summary>
 public class DefaultTcpContext : ITcpContext
 {
-    public uint OnNewConnection()
+    public ActionType OnNewConnection()
     {
         return ActionType.Continue;
     }
 
-    public uint OnDownstreamData(int dataSize, bool endOfStream)
+    public ActionType OnDownstreamData(int dataSize, bool endOfStream)
     {
         return ActionType.Continue;
     }
@@ -69,7 +60,7 @@ public class DefaultTcpContext : ITcpContext
     {
     }
 
-    public uint OnUpstreamData(int dataSize, bool endOfStream)
+    public ActionType OnUpstreamData(int dataSize, bool endOfStream)
     {
         return ActionType.Continue;
     }
@@ -83,32 +74,34 @@ public class DefaultTcpContext : ITcpContext
     }
 }
 
-/// <summary>
-/// DefaultHttpContext is the default implementation of IHttpContext.
-/// </summary>
 public class DefaultHttpContext : IHttpContext
 {
-    public uint OnHttpRequestHeaders(int numHeaders, bool endOfStream)
+    public ActionType OnRequestHeaders(int numHeaders, bool endOfStream)
     {
         return ActionType.Continue;
     }
 
-    public uint OnHttpRequest(int bodySize, bool endOfStream)
+    public ActionType OnRequestBody(int bodySize, bool endOfStream)
     {
         return ActionType.Continue;
     }
 
-    public uint OnHttpRequestTrailers(int numTrailers)
+    public ActionType OnRequestTrailers(int numTrailers)
     {
         return ActionType.Continue;
     }
 
-    public uint OnHttpResponseHeaders(int numHeaders, bool endOfStream)
+    public ActionType OnResponseHeaders(int numHeaders, bool endOfStream)
     {
         return ActionType.Continue;
     }
 
-    public uint OnHttpResponseTrailers(int numHeaders)
+    public ActionType OnResponseBody(int bodySize, bool endOfStream)
+    {
+        return ActionType.Continue;
+    }
+
+    public ActionType OnResponseTrailers(int numHeaders)
     {
         return ActionType.Continue;
     }

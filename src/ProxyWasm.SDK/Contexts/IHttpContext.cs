@@ -1,8 +1,5 @@
 namespace ProxyWasm.SDK;
 
-/// <summary>
-/// IHttpContext is the interface for HTTP context.
-/// </summary>
 public interface IHttpContext
 {
     public ActionType OnRequestHeaders(int numHeaders, bool endOfStream);

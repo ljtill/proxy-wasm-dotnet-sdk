@@ -1,17 +1,23 @@
 namespace ProxyWasm.SDK;
 
-/// <summary>
-/// State is a class to hold the current state of the VM.
-/// </summary>
 public class ContextState
 {
-    public IVMContext? VMContext { get; set; }
-    public Dictionary<uint, PluginContextState> PluginContexts { get; set; } = [];
-    public Dictionary<uint, ITcpContext> TcpContexts { get; set; } = [];
-    public Dictionary<uint, IHttpContext> HttpContexts { get; set; } = [];
+    public IVMContext VMContext { get; set; }
+    public Dictionary<uint, PluginContextState> PluginContexts { get; set; }
+    public Dictionary<uint, ITcpContext> TcpContexts { get; set; }
+    public Dictionary<uint, IHttpContext> HttpContexts { get; set; }
 
-    public Dictionary<uint, uint> ContextIdToRootId { get; } = [];
+    public Dictionary<uint, uint> ContextIdToRootId { get; }
     public uint ActiveContextId { get; set; }
+
+    public ContextState()
+    {
+        VMContext = new DefaultVMContext();
+        PluginContexts = [];
+        TcpContexts = [];
+        HttpContexts = [];
+        ContextIdToRootId = [];
+    }
 
     public void RegisterHttpCallOut(uint calloutId, Action<int, int, int> callback)
     {
@@ -63,20 +69,14 @@ public class ContextState
     }
 }
 
-/// <summary>
-/// PluginContextState is a class to hold the current plugin context and the http callbacks.
-/// </summary>
 public class PluginContextState
 {
-    public IPluginContext? Context { get; set; }
+    public required IPluginContext Context { get; set; }
     public Dictionary<uint, HttpCallbackAttribute> HttpCallbacks { get; set; } = [];
 }
 
-/// <summary>
-/// HttpCallbackAttribute is a class to hold the callback function and the caller context id.
-/// </summary>
 public class HttpCallbackAttribute
 {
-    public Action<int, int, int>? Callback { get; set; }
+    public required Action<int, int, int> Callback { get; set; }
     public uint CallerContextId { get; set; }
 }

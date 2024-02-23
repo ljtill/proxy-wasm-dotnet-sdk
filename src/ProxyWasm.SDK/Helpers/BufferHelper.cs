@@ -2,7 +2,7 @@ namespace ProxyWasm.SDK.Helpers;
 
 public static class BufferHelper
 {
-    public static byte[] GetBuffer(uint bufType, int start, int maxSize)
+    public static byte[] GetBuffer(BufferType bufType, int start, int maxSize)
     {
         byte returnData = 0;
         int returnSize = 0;
@@ -11,18 +11,18 @@ public static class BufferHelper
 
         switch (status)
         {
-            case StatusType.StatusOK:
+            case StatusType.OK:
                 if (returnData == 0)
                 {
                     throw new Exceptions.NotFoundException();
                 }
                 return HostcallHelper.RawByteToByteArray(returnData, returnSize);
             default:
-                throw StatusType.ToException(status);
+                throw StatusHelper.ToException(status);
         }
     }
 
-    public static void AppendToBuffer(uint bufferType, byte[] buffer)
+    public static void AppendToBuffer(BufferType bufferType, byte[] buffer)
     {
         byte bufferData = 0;
         if (buffer.Length != 0)
@@ -31,13 +31,13 @@ public static class BufferHelper
         }
 
         var status = ProxyHost.ProxySetBufferBytes(bufferType, int.MaxValue, 0, bufferData, buffer.Length);
-        if (status != StatusType.StatusOK)
+        if (status != StatusType.OK)
         {
-            throw StatusType.ToException(status);
+            throw StatusHelper.ToException(status);
         }
     }
 
-    public static void PrependToBuffer(uint bufferType, byte[] buffer)
+    public static void PrependToBuffer(BufferType bufferType, byte[] buffer)
     {
         byte bufferData = 0;
         if (buffer.Length != 0)
@@ -46,13 +46,13 @@ public static class BufferHelper
         }
 
         var status = ProxyHost.ProxySetBufferBytes(bufferType, 0, 0, bufferData, buffer.Length);
-        if (status != StatusType.StatusOK)
+        if (status != StatusType.OK)
         {
-            throw StatusType.ToException(status);
+            throw StatusHelper.ToException(status);
         }
     }
 
-    public static void ReplaceBuffer(uint bufferType, byte[] buffer)
+    public static void ReplaceBuffer(BufferType bufferType, byte[] buffer)
     {
         byte bufferData = 0;
         if (buffer.Length != 0)
@@ -61,9 +61,9 @@ public static class BufferHelper
         }
 
         var status = ProxyHost.ProxySetBufferBytes(bufferType, 0, int.MaxValue, bufferData, buffer.Length);
-        if (status != StatusType.StatusOK)
+        if (status != StatusType.OK)
         {
-            throw StatusType.ToException(status);
+            throw StatusHelper.ToException(status);
         }
     }
 }
