@@ -16,7 +16,7 @@ public class Hostcall
 
     public static void SetTickPeriodMilliseconds(uint millSec)
     {
-        var status = Host.ProxySetTickPeriodMilliseconds(millSec);
+        var status = ProxyHost.ProxySetTickPeriodMilliseconds(millSec);
         if (status != StatusType.OK)
         {
             throw StatusType.ToException(status);
@@ -25,7 +25,7 @@ public class Hostcall
 
     public static void SetEffectiveContext(uint contextId)
     {
-        var status = Host.ProxySetEffectiveContext(contextId);
+        var status = ProxyHost.ProxySetEffectiveContext(contextId);
         if (status != StatusType.OK)
         {
             throw StatusType.ToException(status);
@@ -34,7 +34,7 @@ public class Hostcall
 
     public static uint RegisterSharedQueue(string name)
     {
-        var status = Host.ProxyRegisterSharedQueue(HostcallHelper.StringToByte(name), name.Length, out uint queueId);
+        var status = ProxyHost.ProxyRegisterSharedQueue(HostcallHelper.StringToByte(name), name.Length, out uint queueId);
 
         if (status != StatusType.OK)
         {
@@ -46,7 +46,7 @@ public class Hostcall
 
     public static uint ResolveSharedQueue(string vmId, string queueName)
     {
-        var status = Host.ProxyResolveSharedQueue(HostcallHelper.StringToByte(vmId), vmId.Length, HostcallHelper.StringToByte(queueName), queueName.Length, out uint returnId);
+        var status = ProxyHost.ProxyResolveSharedQueue(HostcallHelper.StringToByte(vmId), vmId.Length, HostcallHelper.StringToByte(queueName), queueName.Length, out uint returnId);
         if (status != StatusType.OK)
         {
             throw StatusType.ToException(status);
@@ -57,7 +57,7 @@ public class Hostcall
 
     public static void EnqueueSharedQueue(uint queueId, byte[] data)
     {
-        var status = Host.ProxyEnqueueSharedQueue(queueId, data[0], data.Length);
+        var status = ProxyHost.ProxyEnqueueSharedQueue(queueId, data[0], data.Length);
         if (status != StatusType.OK)
         {
             throw StatusType.ToException(status);
@@ -66,7 +66,7 @@ public class Hostcall
 
     public static byte[] DequeueSharedQueue(uint queueId)
     {
-        var status = Host.ProxyDequeueSharedQueue(queueId, out byte raw, out int size);
+        var status = ProxyHost.ProxyDequeueSharedQueue(queueId, out byte raw, out int size);
         if (status != StatusType.OK)
         {
             throw StatusType.ToException(status);
@@ -77,7 +77,7 @@ public class Hostcall
 
     public static void PluginDone()
     {
-        Host.ProxyDone();
+        ProxyHost.ProxyDone();
     }
 
     public static uint DispatchHttpCall(string cluster, List<KeyValuePair<string, string>> headers, byte[] body, List<KeyValuePair<string, string>> trailers, uint timeoutMillisecond, Action<int, int, int> callBack)
@@ -97,7 +97,7 @@ public class Hostcall
         }
 
         var x = HostcallHelper.StringToByte(cluster);
-        var status = Host.ProxyHttpCall(x, cluster.Length, headerPointer, headerLength, bodyPointer, body.Length, trailerPointer, trailerLength, timeoutMillisecond, out uint calloutId);
+        var status = ProxyHost.ProxyHttpCall(x, cluster.Length, headerPointer, headerLength, bodyPointer, body.Length, trailerPointer, trailerLength, timeoutMillisecond, out uint calloutId);
         switch (status)
         {
             case StatusType.OK:
@@ -166,7 +166,7 @@ public class Hostcall
 
     public static void ContinueTcpStream()
     {
-        var status = Host.ProxyContinueStream(StreamType.StreamDownstream);
+        var status = ProxyHost.ProxyContinueStream(StreamType.StreamDownstream);
         if (status != StatusType.OK)
         {
             throw StatusType.ToException(status);
@@ -175,7 +175,7 @@ public class Hostcall
 
     public static void CloseDownstream()
     {
-        var status = Host.ProxyCloseStream(StreamType.StreamDownstream);
+        var status = ProxyHost.ProxyCloseStream(StreamType.StreamDownstream);
         if (status != StatusType.OK)
         {
             throw StatusType.ToException(status);
@@ -184,7 +184,7 @@ public class Hostcall
 
     public static void CloseUpstream()
     {
-        var status = Host.ProxyCloseStream(StreamType.StreamUpstream);
+        var status = ProxyHost.ProxyCloseStream(StreamType.StreamUpstream);
         if (status != StatusType.OK)
         {
             throw StatusType.ToException(status);
@@ -273,7 +273,7 @@ public class Hostcall
 
     public static void ResumeHttpRequest()
     {
-        var status = Host.ProxyContinueStream(StreamType.StreamRequest);
+        var status = ProxyHost.ProxyContinueStream(StreamType.StreamRequest);
         if (status != StatusType.OK)
         {
             throw StatusType.ToException(status);
@@ -362,7 +362,7 @@ public class Hostcall
 
     public static void ResumeHttpResponse()
     {
-        var status = Host.ProxyContinueStream(StreamType.StreamResponse);
+        var status = ProxyHost.ProxyContinueStream(StreamType.StreamResponse);
         if (status != StatusType.OK)
         {
             throw StatusType.ToException(status);
@@ -381,7 +381,7 @@ public class Hostcall
         var headerPointer = serializeHeaders[0];
         var headerLength = serializeHeaders.Length;
 
-        var status = Host.ProxySendLocalResponse(statusCode, null, 0, bytePointer, body.Length, headerPointer, headerLength, gRPCStatus);
+        var status = ProxyHost.ProxySendLocalResponse(statusCode, null, 0, bytePointer, body.Length, headerPointer, headerLength, gRPCStatus);
         if (status != StatusType.OK)
         {
             throw StatusType.ToException(status);
@@ -401,7 +401,7 @@ public class Hostcall
             dataPtr = data[0];
         }
 
-        var status = Host.ProxySetSharedData(HostcallHelper.StringToByte(key), key.Length, dataPtr, data.Length, cas);
+        var status = ProxyHost.ProxySetSharedData(HostcallHelper.StringToByte(key), key.Length, dataPtr, data.Length, cas);
         if (status != StatusType.OK)
         {
             throw StatusType.ToException(status);
@@ -417,7 +417,7 @@ public class Hostcall
 
         var raw = HostcallHelper.SerializePropertyPath(path);
 
-        var status = Host.ProxyGetProperty(raw[0], raw.Length, out byte ret, out int retSize);
+        var status = ProxyHost.ProxyGetProperty(raw[0], raw.Length, out byte ret, out int retSize);
         if (status != StatusType.OK)
         {
             throw StatusType.ToException(status);
@@ -440,7 +440,7 @@ public class Hostcall
 
         var raw = HostcallHelper.SerializePropertyPath(path);
 
-        var status = Host.ProxySetProperty(raw[0], raw.Length, data[0], data.Length);
+        var status = ProxyHost.ProxySetProperty(raw[0], raw.Length, data[0], data.Length);
         if (status != StatusType.OK)
         {
             throw StatusType.ToException(status);
@@ -457,7 +457,7 @@ public class Hostcall
             paramPtr = param[0];
         }
 
-        var status = Host.ProxyCallForeignFunction(function, funcName.Length, paramPtr, param.Length, out byte returnData, out int returnSize);
+        var status = ProxyHost.ProxyCallForeignFunction(function, funcName.Length, paramPtr, param.Length, out byte returnData, out int returnSize);
         if (status != StatusType.OK)
         {
             throw StatusType.ToException(status);

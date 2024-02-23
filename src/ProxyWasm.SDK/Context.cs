@@ -62,3 +62,21 @@ public class ContextState
         ActiveContextId = contextId;
     }
 }
+
+/// <summary>
+/// PluginContextState is a class to hold the current plugin context and the http callbacks.
+/// </summary>
+public class PluginContextState
+{
+    public IPluginContext? Context { get; set; }
+    public Dictionary<uint, HttpCallbackAttribute> HttpCallbacks { get; set; } = [];
+}
+
+/// <summary>
+/// HttpCallbackAttribute is a class to hold the callback function and the caller context id.
+/// </summary>
+public class HttpCallbackAttribute
+{
+    public Action<int, int, int>? Callback { get; set; }
+    public uint CallerContextId { get; set; }
+}

@@ -5,9 +5,9 @@ namespace ProxyWasm.SDK;
 /// <summary>
 /// Contains constants related to the OnVM event.
 /// </summary>
-public static class OnVMType
+public class OnVMStartType
 {
-    public static bool
+    public bool
         StartStatusOK = true,
         StartStatusFailed = false;
 }
@@ -15,7 +15,7 @@ public static class OnVMType
 /// <summary>
 /// Contains constants related to the OnPlugin event.
 /// </summary>
-public class OnPluginType
+public class OnPluginStartType
 {
     public const bool
         StartStatusOK = true,
@@ -47,7 +47,7 @@ public class PeerType
 /// <summary>
 /// Buffer is a class that contains the buffer that can be returned by the ABI.
 /// </summary>
-public static class BufferType
+public class BufferType
 {
     public const uint
         HttpRequestBody = 0,
@@ -64,7 +64,7 @@ public static class BufferType
 /// <summary>
 /// LogLevels is a class that contains the log levels that can be returned by the ABI.
 /// </summary>
-public static class LogLevelType
+public class LogLevelType
 {
     public const uint
         LogLevelTrace = 0,
@@ -80,7 +80,7 @@ public static class LogLevelType
     /// </summary>
     /// <param name="logLevel">The log level value.</param>
     /// <returns>The string representation of the log level.</returns>
-    public static string ToString(uint logLevel)
+    public string ToString(uint logLevel)
     {
         switch (logLevel)
         {
@@ -108,7 +108,7 @@ public static class LogLevelType
 /// <summary>
 /// Map is a class that contains the map that can be returned by the ABI.
 /// </summary>
-public static class MapType
+public class MapType
 {
     public const uint
         HttpRequestHeaders = 0,
@@ -122,7 +122,7 @@ public static class MapType
 /// <summary>
 /// Metric is a class that contains the metric that can be returned by the ABI.
 /// </summary>
-public static class MetricType
+public class MetricType
 {
     public const uint
         Counter = 0,
@@ -133,7 +133,7 @@ public static class MetricType
 /// <summary>
 /// Stream is a class that contains the stream that can be returned by the ABI.
 /// </summary>
-public static class StreamType
+public class StreamType
 {
     public const uint
         StreamRequest = 0,
@@ -145,7 +145,7 @@ public static class StreamType
 /// <summary>
 /// Status is a class that contains the status codes that can be returned by the ABI.
 /// </summary>
-public static class StatusType
+public class StatusType
 {
     public const uint
         OK = 0,

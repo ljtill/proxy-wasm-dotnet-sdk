@@ -1,6 +1,6 @@
 namespace ProxyWasm.SDK;
 
-public static class Host
+public static class ProxyHost
 {
     //export proxy_log
     public static uint ProxyLog(uint logLevel, byte messageData, int messageSize)

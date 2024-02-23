@@ -7,7 +7,7 @@ public class DefaultVMContext : IVMContext
 {
     public bool OnVMStart(int vmConfigurationSize)
     {
-        return OnVMType.StartStatusOK;
+        return OnVMStartType.StartStatusOK;
     }
 
     public IPluginContext NewPluginContext(uint contextID)
@@ -23,7 +23,7 @@ public class DefaultPluginContext : IPluginContext
 {
     public bool OnPluginStart(int pluginConfigurationSize)
     {
-        return OnPluginType.StartStatusOK;
+        return OnPluginStartType.StartStatusOK;
     }
 
     public bool OnPluginDone()
@@ -113,7 +113,7 @@ public class DefaultHttpContext : IHttpContext
         return ActionType.Continue;
     }
 
-    public void OnHttpStreamDone()
+    public void OnStreamDone()
     {
     }
 }

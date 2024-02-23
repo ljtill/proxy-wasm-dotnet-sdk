@@ -5,7 +5,7 @@ namespace ProxyWasm.SDK;
 /// </summary>
 public interface IVMContext
 {
-    public bool OnVMStart(int vmConfigurationSize);
+    public OnVMStartType OnVMStart(int vmConfigurationSize);
 
     public IPluginContext NewPluginContext(uint contextID);
 }

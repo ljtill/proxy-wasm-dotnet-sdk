@@ -5,15 +5,17 @@ namespace ProxyWasm.SDK;
 /// </summary>
 public interface IHttpContext
 {
-    public uint OnHttpRequestHeaders(int numHeaders, bool endOfStream);
+    public ActionType OnRequestHeaders(int numHeaders, bool endOfStream);
 
-    public uint OnHttpRequest(int bodySize, bool endOfStream);
+    public ActionType OnRequestBody(int bodySize, bool endOfStream);
 
-    public uint OnHttpRequestTrailers(int numTrailers);
+    public ActionType OnRequestTrailers(int numTrailers);
 
-    public uint OnHttpResponseHeaders(int numHeaders, bool endOfStream);
+    public ActionType OnResponseHeaders(int numHeaders, bool endOfStream);
 
-    public uint OnHttpResponseTrailers(int numHeaders);
+    public ActionType OnResponseBody(int bodySize, bool endOfStream);
 
-    public void OnHttpStreamDone();
+    public ActionType OnResponseTrailers(int numHeaders);
+
+    public void OnStreamDone();
 }

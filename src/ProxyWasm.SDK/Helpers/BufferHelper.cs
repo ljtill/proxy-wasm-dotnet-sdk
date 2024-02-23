@@ -7,7 +7,7 @@ public static class BufferHelper
         byte returnData = 0;
         int returnSize = 0;
 
-        var status = Host.ProxyGetBufferBytes(bufType, start, maxSize, returnData, returnSize);
+        var status = ProxyHost.ProxyGetBufferBytes(bufType, start, maxSize, returnData, returnSize);
 
         switch (status)
         {
@@ -30,7 +30,7 @@ public static class BufferHelper
             bufferData = buffer[0];
         }
 
-        var status = Host.ProxySetBufferBytes(bufferType, int.MaxValue, 0, bufferData, buffer.Length);
+        var status = ProxyHost.ProxySetBufferBytes(bufferType, int.MaxValue, 0, bufferData, buffer.Length);
         if (status != StatusType.StatusOK)
         {
             throw StatusType.ToException(status);
@@ -45,7 +45,7 @@ public static class BufferHelper
             bufferData = buffer[0];
         }
 
-        var status = Host.ProxySetBufferBytes(bufferType, 0, 0, bufferData, buffer.Length);
+        var status = ProxyHost.ProxySetBufferBytes(bufferType, 0, 0, bufferData, buffer.Length);
         if (status != StatusType.StatusOK)
         {
             throw StatusType.ToException(status);
@@ -60,7 +60,7 @@ public static class BufferHelper
             bufferData = buffer[0];
         }
 
-        var status = Host.ProxySetBufferBytes(bufferType, 0, int.MaxValue, bufferData, buffer.Length);
+        var status = ProxyHost.ProxySetBufferBytes(bufferType, 0, int.MaxValue, bufferData, buffer.Length);
         if (status != StatusType.StatusOK)
         {
             throw StatusType.ToException(status);

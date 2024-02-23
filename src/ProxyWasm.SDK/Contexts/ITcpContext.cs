@@ -5,13 +5,13 @@ namespace ProxyWasm.SDK;
 /// </summary>
 public interface ITcpContext
 {
-    public uint OnNewConnection();
+    public ActionType OnNewConnection();
 
-    public uint OnDownstreamData(int dataSize, bool endOfStream);
+    public ActionType OnDownstreamData(int dataSize, bool endOfStream);
 
     public void OnDownstreamClose(PeerType peerType);
 
-    public uint OnUpstreamData(int dataSize, bool endOfStream);
+    public ActionType OnUpstreamData(int dataSize, bool endOfStream);
 
     public void OnUpstreamClose(PeerType peerType);
 
