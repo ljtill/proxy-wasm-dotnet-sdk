@@ -4,75 +4,75 @@ public static class LogHelper
 {
     public static void LogTrace(string message)
     {
-        var status = ProxyHost.ProxyLog(LogLevelType.LogLevelTrace, HostcallHelper.StringToByte(message), message.Length);
-        if (status != StatusType.StatusOK)
+        var status = ProxyHost.ProxyLog(LogLevelType.Trace, HostcallHelper.StringToByte(message), message.Length);
+        if (status != StatusType.OK)
         {
-            throw StatusType.ToException(status);
+            throw StatusHelper.ToException(status);
         }
     }
 
     public static void LogDebug(string message)
     {
-        var status = ProxyHost.ProxyLog(LogLevelType.LogLevelDebug, HostcallHelper.StringToByte(message), message.Length);
-        if (status != StatusType.StatusOK)
+        var status = ProxyHost.ProxyLog(LogLevelType.Debug, HostcallHelper.StringToByte(message), message.Length);
+        if (status != StatusType.OK)
         {
-            throw StatusType.ToException(status);
+            throw StatusHelper.ToException(status);
         }
     }
 
     public static void LogInfo(string message)
     {
-        var status = ProxyHost.ProxyLog(LogLevelType.LogLevelInfo, HostcallHelper.StringToByte(message), message.Length);
-        if (status != StatusType.StatusOK)
+        var status = ProxyHost.ProxyLog(LogLevelType.Information, HostcallHelper.StringToByte(message), message.Length);
+        if (status != StatusType.OK)
         {
-            throw StatusType.ToException(status);
+            throw StatusHelper.ToException(status);
         }
     }
 
     public static void LogWarn(string message)
     {
-        var status = ProxyHost.ProxyLog(LogLevelType.LogLevelWarn, HostcallHelper.StringToByte(message), message.Length);
-        if (status != StatusType.StatusOK)
+        var status = ProxyHost.ProxyLog(LogLevelType.Warning, HostcallHelper.StringToByte(message), message.Length);
+        if (status != StatusType.OK)
         {
-            throw StatusType.ToException(status);
+            throw StatusHelper.ToException(status);
         }
     }
 
     public static void LogError(string message)
     {
-        var status = ProxyHost.ProxyLog(LogLevelType.LogLevelError, HostcallHelper.StringToByte(message), message.Length);
-        if (status != StatusType.StatusOK)
+        var status = ProxyHost.ProxyLog(LogLevelType.Error, HostcallHelper.StringToByte(message), message.Length);
+        if (status != StatusType.OK)
         {
-            throw StatusType.ToException(status);
+            throw StatusHelper.ToException(status);
         }
     }
 
     public static void LogCritical(string message)
     {
-        var status = ProxyHost.ProxyLog(LogLevelType.LogLevelCritical, HostcallHelper.StringToByte(message), message.Length);
-        if (status != StatusType.StatusOK)
+        var status = ProxyHost.ProxyLog(LogLevelType.Critical, HostcallHelper.StringToByte(message), message.Length);
+        if (status != StatusType.OK)
         {
-            throw StatusType.ToException(status);
+            throw StatusHelper.ToException(status);
         }
     }
 
-    public string ToString(LogLevelType logLevel)
+    public static string ToString(LogLevelType logLevel)
     {
         switch (logLevel)
         {
-            case LogLevelTrace:
+            case LogLevelType.Trace:
                 return "trace";
-            case LogLevelDebug:
+            case LogLevelType.Debug:
                 return "debug";
-            case LogLevelInfo:
+            case LogLevelType.Information:
                 return "info";
-            case LogLevelWarn:
+            case LogLevelType.Warning:
                 return "warn";
-            case LogLevelError:
+            case LogLevelType.Error:
                 return "error";
-            case LogLevelCritical:
+            case LogLevelType.Critical:
                 return "critical";
-            case LogLevelMax:
+            case LogLevelType.Max:
                 return "max";
             default:
                 // TODO: Panic

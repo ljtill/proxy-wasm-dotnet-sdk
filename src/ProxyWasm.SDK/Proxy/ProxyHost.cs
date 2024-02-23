@@ -3,7 +3,7 @@ namespace ProxyWasm.SDK;
 public static class ProxyHost
 {
     //export proxy_log
-    public static StatusType ProxyLog(uint logLevel, byte messageData, int messageSize)
+    public static StatusType ProxyLog(LogLevelType logLevel, byte messageData, int messageSize)
     {
         return StatusType.OK;
     }
@@ -55,7 +55,7 @@ public static class ProxyHost
     }
 
     //export proxy_get_header_map_value
-    public static StatusType ProxyGetHeaderMapValue(uint map, byte keyData, int keySize, out byte returnValueData, out int returnValueSize)
+    public static StatusType ProxyGetHeaderMapValue(MapType map, byte keyData, int keySize, out byte returnValueData, out int returnValueSize)
     {
         returnValueData = 0;
         returnValueSize = 0;
@@ -63,19 +63,19 @@ public static class ProxyHost
     }
 
     //export proxy_add_header_map_value
-    public static StatusType ProxyAddHeaderMapValue(uint map, byte keyData, int keySize, byte valueData, int valueSize)
+    public static StatusType ProxyAddHeaderMapValue(MapType map, byte keyData, int keySize, byte valueData, int valueSize)
     {
         return StatusType.OK;
     }
 
     //export proxy_replace_header_map_value
-    public static StatusType ProxyReplaceHeaderMapValue(uint map, byte keyData, int keySize, byte valueData, int valueSize)
+    public static StatusType ProxyReplaceHeaderMapValue(MapType map, byte keyData, int keySize, byte valueData, int valueSize)
     {
         return StatusType.OK;
     }
 
     //export proxy_remove_header_map_value
-    public static StatusType ProxyRemoveHeaderMapValue(uint map, byte keyData, int keySize)
+    public static StatusType ProxyRemoveHeaderMapValue(MapType map, byte keyData, int keySize)
     {
         return StatusType.OK;
     }
@@ -89,7 +89,7 @@ public static class ProxyHost
     }
 
     //export proxy_set_header_map_pairs
-    public static StatusType ProxySetHeaderMapPairs(uint map, byte mapData, int mapSize)
+    public static StatusType ProxySetHeaderMapPairs(MapType map, byte mapData, int mapSize)
     {
         return StatusType.OK;
     }

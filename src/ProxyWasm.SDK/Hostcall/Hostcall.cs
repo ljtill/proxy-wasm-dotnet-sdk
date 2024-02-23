@@ -166,7 +166,7 @@ public class Hostcall
 
     public static void ContinueTcpStream()
     {
-        var status = ProxyHost.ProxyContinueStream(StreamType.StreamDownstream);
+        var status = ProxyHost.ProxyContinueStream(StreamType.Downstream);
         if (status != StatusType.OK)
         {
             throw StatusHelper.ToException(status);
@@ -175,7 +175,7 @@ public class Hostcall
 
     public static void CloseDownstream()
     {
-        var status = ProxyHost.ProxyCloseStream(StreamType.StreamDownstream);
+        var status = ProxyHost.ProxyCloseStream(StreamType.Downstream);
         if (status != StatusType.OK)
         {
             throw StatusHelper.ToException(status);
@@ -184,7 +184,7 @@ public class Hostcall
 
     public static void CloseUpstream()
     {
-        var status = ProxyHost.ProxyCloseStream(StreamType.StreamUpstream);
+        var status = ProxyHost.ProxyCloseStream(StreamType.Upstream);
         if (status != StatusType.OK)
         {
             throw StatusHelper.ToException(status);
@@ -273,7 +273,7 @@ public class Hostcall
 
     public static void ResumeHttpRequest()
     {
-        var status = ProxyHost.ProxyContinueStream(StreamType.StreamRequest);
+        var status = ProxyHost.ProxyContinueStream(StreamType.Request);
         if (status != StatusType.OK)
         {
             throw StatusHelper.ToException(status);
@@ -362,7 +362,7 @@ public class Hostcall
 
     public static void ResumeHttpResponse()
     {
-        var status = ProxyHost.ProxyContinueStream(StreamType.StreamResponse);
+        var status = ProxyHost.ProxyContinueStream(StreamType.Response);
         if (status != StatusType.OK)
         {
             throw StatusHelper.ToException(status);

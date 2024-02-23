@@ -20,9 +20,9 @@ public enum ActionType
 
 public enum PeerType
 {
-    PeerTypeUnknown = 0,
-    PeerTypeLocal = 1,
-    PeerTypeRemote = 2
+    Unknown = 0,
+    Local = 1,
+    Remote = 2
 }
 
 public enum BufferType
@@ -40,13 +40,13 @@ public enum BufferType
 
 public enum LogLevelType
 {
-    LogLevelTrace = 0,
-    LogLevelDebug = 1,
-    LogLevelInfo = 2,
-    LogLevelWarn = 3,
-    LogLevelError = 4,
-    LogLevelCritical = 5,
-    LogLevelMax = 6
+    Trace = 0,
+    Debug = 1,
+    Information = 2,
+    Warning = 3,
+    Error = 4,
+    Critical = 5,
+    Max = 6
 }
 
 public enum MapType
@@ -68,10 +68,10 @@ public enum MetricType
 
 public enum StreamType
 {
-    StreamRequest = 0,
-    StreamResponse = 1,
-    StreamDownstream = 2,
-    StreamUpstream = 3
+    Request = 0,
+    Response = 1,
+    Downstream = 2,
+    Upstream = 3
 }
 
 public enum StatusType
