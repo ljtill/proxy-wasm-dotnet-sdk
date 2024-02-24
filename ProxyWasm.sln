@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1EAE7AFC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProxyWasm.SDK.Tests", "tests\ProxyWasm.SDK.Tests\ProxyWasm.SDK.Tests.csproj", "{A2966117-EE65-4CEE-8B06-0FC9242B35AF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProxyWasm.Host", "src\ProxyWasm.Host\ProxyWasm.Host.csproj", "{2C28DAB0-DBAE-4D15-AB6A-BF99710478E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,9 +30,14 @@ Global
 		{A2966117-EE65-4CEE-8B06-0FC9242B35AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2966117-EE65-4CEE-8B06-0FC9242B35AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2966117-EE65-4CEE-8B06-0FC9242B35AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C28DAB0-DBAE-4D15-AB6A-BF99710478E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C28DAB0-DBAE-4D15-AB6A-BF99710478E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C28DAB0-DBAE-4D15-AB6A-BF99710478E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C28DAB0-DBAE-4D15-AB6A-BF99710478E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2CBBD68A-3657-4B05-9ACB-511A247639DE} = {203DB6F5-4A9B-4639-926A-9EE051C3C15A}
 		{A2966117-EE65-4CEE-8B06-0FC9242B35AF} = {1EAE7AFC-B270-4CB4-9C04-3F2261EE7615}
+		{2C28DAB0-DBAE-4D15-AB6A-BF99710478E2} = {203DB6F5-4A9B-4639-926A-9EE051C3C15A}
 	EndGlobalSection
 EndGlobal
