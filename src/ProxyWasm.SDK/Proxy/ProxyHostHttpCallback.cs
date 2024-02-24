@@ -3,7 +3,7 @@ namespace ProxyWasm.SDK;
 public class ProxyHostHttpCallback
 {
     //export proxy_on_request_headers
-    public static ActionType ProxyOnRequestHeaders(ContextState currentContextState, uint contextId, int numberHeaders, bool endOfStream)
+    public static ActionType ProxyOnRequestHeaders(RootContext currentContextState, uint contextId, int numberHeaders, bool endOfStream)
     {
         var httpContext = currentContextState.HttpContexts[contextId];
         currentContextState.SetActiveContextId(contextId);
@@ -12,7 +12,7 @@ public class ProxyHostHttpCallback
     }
 
     //export proxy_on_request_body
-    public static ActionType ProxyOnRequestBody(ContextState currentContextState, uint contextId, int bodySize, bool endOfStream)
+    public static ActionType ProxyOnRequestBody(RootContext currentContextState, uint contextId, int bodySize, bool endOfStream)
     {
         var httpContext = currentContextState.HttpContexts[contextId];
         currentContextState.SetActiveContextId(contextId);
@@ -21,7 +21,7 @@ public class ProxyHostHttpCallback
     }
 
     //export proxy_on_request_trailers
-    public static ActionType ProxyOnRequestTrailers(ContextState contextState, uint contextId, int numberTrailers)
+    public static ActionType ProxyOnRequestTrailers(RootContext contextState, uint contextId, int numberTrailers)
     {
         var httpContext = contextState.HttpContexts[contextId];
         contextState.SetActiveContextId(contextId);
@@ -30,7 +30,7 @@ public class ProxyHostHttpCallback
     }
 
     //export proxy_on_response_headers
-    public static ActionType ProxyOnResponseHeaders(ContextState contextState, uint contextId, int numberHeaders, bool endOfStream)
+    public static ActionType ProxyOnResponseHeaders(RootContext contextState, uint contextId, int numberHeaders, bool endOfStream)
     {
         var httpContext = contextState.HttpContexts[contextId];
         contextState.SetActiveContextId(contextId);
@@ -40,7 +40,7 @@ public class ProxyHostHttpCallback
 
 
     //export proxy_on_response_body
-    public static ActionType ProxyOnResponseBody(ContextState contextState, uint contextId, int bodySize, bool endOfStream)
+    public static ActionType ProxyOnResponseBody(RootContext contextState, uint contextId, int bodySize, bool endOfStream)
     {
         var httpContext = contextState.HttpContexts[contextId];
         contextState.SetActiveContextId(contextId);
@@ -49,7 +49,7 @@ public class ProxyHostHttpCallback
     }
 
     //export proxy_on_response_trailers
-    public static void ProxyOnResponseTrailers(ContextState contextState, uint contextId, int numberTrailers)
+    public static void ProxyOnResponseTrailers(RootContext contextState, uint contextId, int numberTrailers)
     {
         var httpContext = contextState.HttpContexts[contextId];
         contextState.SetActiveContextId(contextId);
@@ -58,7 +58,7 @@ public class ProxyHostHttpCallback
     }
 
     //export proxy_on_http_call_response
-    public static void ProxyOnHttpCallResponse(ContextState contextState, uint pluginContextId, uint calloutId, int numHeaders, int bodySize, int numTrailers)
+    public static void ProxyOnHttpCallResponse(RootContext contextState, uint pluginContextId, uint calloutId, int numHeaders, int bodySize, int numTrailers)
     {
         var pluginContext = contextState.PluginContexts[pluginContextId];
         var httpCallback = pluginContext.HttpCallbacks[calloutId];

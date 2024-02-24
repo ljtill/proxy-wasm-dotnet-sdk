@@ -1,6 +1,6 @@
 namespace ProxyWasm.SDK;
 
-public class ContextState
+public class RootContext
 {
     public IVMContext VMContext { get; set; }
     public Dictionary<uint, PluginContextState> PluginContexts { get; set; }
@@ -10,7 +10,7 @@ public class ContextState
     public Dictionary<uint, uint> ContextIdToRootId { get; }
     public uint ActiveContextId { get; set; }
 
-    public ContextState()
+    public RootContext()
     {
         VMContext = new DefaultVMContext();
         PluginContexts = [];

@@ -10,13 +10,13 @@ public class ProxyHostCallback
     }
 
     //export proxy_on_vm_start
-    public static OnVMStartType ProxyOnVMStart(ContextState currentContextState, int vmConfigurationSize)
+    public static OnVMStartType ProxyOnVMStart(RootContext currentContextState, int vmConfigurationSize)
     {
         return currentContextState.VMContext.OnVMStart(vmConfigurationSize);
     }
 
     //export proxy_on_configure
-    public static OnPluginStartType ProxyOnConfigure(ContextState currentContextState, uint pluginContextId, int pluginConfigurationSize)
+    public static OnPluginStartType ProxyOnConfigure(RootContext currentContextState, uint pluginContextId, int pluginConfigurationSize)
     {
         var pluginContext = currentContextState.PluginContexts[pluginContextId];
         currentContextState.SetActiveContextId(pluginContextId);
@@ -25,7 +25,7 @@ public class ProxyHostCallback
     }
 
     //export proxy_on_context_create
-    public static void ProxyOnContextCreate(ContextState contextState, uint contextId, uint pluginContextId)
+    public static void ProxyOnContextCreate(RootContext contextState, uint contextId, uint pluginContextId)
     {
         if (pluginContextId == 0)
         {
@@ -42,7 +42,7 @@ public class ProxyHostCallback
     }
 
     //export proxy_on_log
-    public static void ProxyOnLog(ContextState contextState, uint contextId)
+    public static void ProxyOnLog(RootContext contextState, uint contextId)
     {
         var tcpContext = contextState.TcpContexts[contextId];
         if (tcpContext != null)
@@ -60,7 +60,7 @@ public class ProxyHostCallback
     }
 
     //export proxy_on_done
-    public static bool ProxyOnDone(ContextState contextState, uint contextId)
+    public static bool ProxyOnDone(RootContext contextState, uint contextId)
     {
         var pluginContext = contextState.PluginContexts[contextId];
         if (pluginContext != null)
@@ -73,7 +73,7 @@ public class ProxyHostCallback
     }
 
     //export proxy_on_delete
-    public static void ProxyOnDelete(ContextState contextState, uint contextId)
+    public static void ProxyOnDelete(RootContext contextState, uint contextId)
     {
         contextState.ContextIdToRootId.Remove(contextId);
         contextState.TcpContexts.Remove(contextId);
@@ -84,7 +84,7 @@ public class ProxyHostCallback
     }
 
     //export proxy_on_queue_ready
-    public static void ProxyOnQueueReady(ContextState contextState, uint queueId)
+    public static void ProxyOnQueueReady(RootContext contextState, uint queueId)
     {
         var pluginContext = contextState.PluginContexts[queueId];
         contextState.SetActiveContextId(queueId);
@@ -93,7 +93,7 @@ public class ProxyHostCallback
     }
 
     //export proxy_on_tick
-    public static void ProxyOnTick(ContextState contextState, uint pluginContextId)
+    public static void ProxyOnTick(RootContext contextState, uint pluginContextId)
     {
         var pluginContext = contextState.PluginContexts[pluginContextId];
         contextState.SetActiveContextId(pluginContextId);
