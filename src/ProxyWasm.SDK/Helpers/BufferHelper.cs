@@ -4,11 +4,7 @@ public static class BufferHelper
 {
     public static byte[] GetBuffer(BufferType bufType, int start, int maxSize)
     {
-        byte returnData = 0;
-        int returnSize = 0;
-
-        var status = ProxyHost.ProxyGetBufferBytes(bufType, start, maxSize, returnData, returnSize);
-
+        var status = ProxyHost.ProxyGetBufferBytes(bufType, start, maxSize, out byte returnData, out int returnSize);
         switch (status)
         {
             case StatusType.OK:

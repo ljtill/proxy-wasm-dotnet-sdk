@@ -80,7 +80,7 @@ public class Hostcall
         ProxyHost.ProxyDone();
     }
 
-    public static uint DispatchHttpCall(string cluster, List<KeyValuePair<string, string>> headers, byte[] body, List<KeyValuePair<string, string>> trailers, uint timeoutMillisecond, Action<int, int, int> callBack)
+    public static uint DispatchHttpCall(RootContext context, string cluster, List<KeyValuePair<string, string>> headers, byte[] body, List<KeyValuePair<string, string>> trailers, uint timeoutMillisecond, Action<int, int, int> callBack)
     {
         var serializeHeaders = HostcallHelper.SerializeMap(headers);
         var headerPointer = serializeHeaders[0];
@@ -101,8 +101,7 @@ public class Hostcall
         switch (status)
         {
             case StatusType.OK:
-                // TODO: Implement
-                // VMState.RegisterHttpCallOut(calloutId, callBack);
+                context.RegisterHttpCallOut(calloutId, callBack);
                 return calloutId;
             default:
                 throw StatusHelper.ToException(status);
@@ -388,9 +387,15 @@ public class Hostcall
         }
     }
 
-    public static void GetSharedData()
+    public static (byte[], uint) GetSharedData(string key)
     {
-        // TODO: Implement
+        var status = ProxyHost.ProxyGetSharedData(HostcallHelper.StringToByte(key), key.Length, out byte raw, out int size, out uint cas);
+        if (status != StatusType.OK)
+        {
+            throw StatusHelper.ToException(status);
+        }
+
+        return (HostcallHelper.RawByteToByteArray(raw, size), cas);
     }
 
     public static void SetSharedData(string key, byte[] data, uint cas)
@@ -466,21 +471,39 @@ public class Hostcall
         return HostcallHelper.RawByteToByteArray(returnData, returnSize);
     }
 
-    public static MetricCounter DefineCounterMetric()
+    public static MetricCounter DefineCounterMetric(string name)
     {
-        // TODO: Implement
-        return new MetricCounter();
+        var ptr = HostcallHelper.StringToByte(name);
+        var status = ProxyHost.ProxyDefineMetric(MetricType.Counter, ptr, name.Length, out uint id);
+        if (status != StatusType.OK)
+        {
+            throw StatusHelper.ToException(status);
+        }
+
+        return new MetricCounter(id);
     }
 
-    public static MetricGauge DefineGaugeMetric()
+    public static MetricGauge DefineGaugeMetric(string name)
     {
-        // TODO: Implement
-        return new MetricGauge();
+        var ptr = HostcallHelper.StringToByte(name);
+        var status = ProxyHost.ProxyDefineMetric(MetricType.Gauge, ptr, name.Length, out uint id);
+        if (status != StatusType.OK)
+        {
+            throw StatusHelper.ToException(status);
+        }
+
+        return new MetricGauge(id);
     }
 
-    public static MetricHistogram DefineHistogramMetric()
+    public static MetricHistogram DefineHistogramMetric(string name)
     {
-        // TODO: Implement
-        return new MetricHistogram();
+        var ptr = HostcallHelper.StringToByte(name);
+        var status = ProxyHost.ProxyDefineMetric(MetricType.Histogram, ptr, name.Length, out uint id);
+        if (status != StatusType.OK)
+        {
+            throw StatusHelper.ToException(status);
+        }
+
+        return new MetricHistogram(id);
     }
 }

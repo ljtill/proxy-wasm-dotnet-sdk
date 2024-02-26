@@ -58,25 +58,16 @@ public static class LogHelper
 
     public static string ToString(LogLevelType logLevel)
     {
-        switch (logLevel)
+        return logLevel switch
         {
-            case LogLevelType.Trace:
-                return "trace";
-            case LogLevelType.Debug:
-                return "debug";
-            case LogLevelType.Information:
-                return "info";
-            case LogLevelType.Warning:
-                return "warn";
-            case LogLevelType.Error:
-                return "error";
-            case LogLevelType.Critical:
-                return "critical";
-            case LogLevelType.Max:
-                return "max";
-            default:
-                // TODO: Panic
-                return "unknown";
-        }
+            LogLevelType.Trace => "trace",
+            LogLevelType.Debug => "debug",
+            LogLevelType.Information => "info",
+            LogLevelType.Warning => "warn",
+            LogLevelType.Error => "error",
+            LogLevelType.Critical => "critical",
+            LogLevelType.Max => "max",
+            _ => "unknown",
+        };
     }
 }

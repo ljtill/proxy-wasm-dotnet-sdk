@@ -1,191 +1,94 @@
+using System.Runtime.InteropServices;
+
 namespace ProxyWasm.SDK;
 
-public static class ProxyHost
+static class ProxyHost
 {
-    //export proxy_log
-    public static StatusType ProxyLog(LogLevelType logLevel, byte messageData, int messageSize)
-    {
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_log")]
+    static extern StatusType ProxyLog(LogLevelType logLevel, byte messageData, int messageSize);
 
-    //export proxy_send_local_response
-    public static StatusType ProxySendLocalResponse(uint statusCode, byte? statusCodeDetailData, int statusCodeDetailsSize, byte bodyData, int bodySize, byte headersData, int headersSize, int grpcStatus)
-    {
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_send_local_response")]
+    static extern StatusType ProxySendLocalResponse(uint statusCode, byte? statusCodeDetailData, int statusCodeDetailsSize, byte bodyData, int bodySize, byte headersData, int headersSize, int grpcStatus);
 
-    //export proxy_get_shared_data
-    public static StatusType ProxyGetSharedData(byte keyData, int keySize, byte returnValueData, int returnValueSize, uint returnCas)
-    {
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_get_shared_data")]
+    static extern StatusType ProxyGetSharedData(byte keyData, int keySize, out byte returnValueData, out int returnValueSize, out uint returnCas);
 
-    //export proxy_set_shared_data
-    public static StatusType ProxySetSharedData(byte keyData, int keySize, byte valueData, int valueSize, uint cas)
-    {
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_set_shared_data")]
+    static extern StatusType ProxySetSharedData(byte keyData, int keySize, byte valueData, int valueSize, uint cas);
 
-    //export proxy_register_shared_queue
-    public static StatusType ProxyRegisterSharedQueue(byte nameData, int nameSize, out uint returnId)
-    {
-        returnId = 0;
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_register_shared_queue")]
+    static extern StatusType ProxyRegisterSharedQueue(byte nameData, int nameSize, out uint returnId);
 
-    //export proxy_resolve_shared_queue
-    public static StatusType ProxyResolveSharedQueue(byte vmIdData, int vmIdSize, byte nameData, int nameSize, out uint returnId)
-    {
-        returnId = 0;
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_resolve_shared_queue")]
+    static extern StatusType ProxyResolveSharedQueue(byte vmIdData, int vmIdSize, byte nameData, int nameSize, out uint returnId);
 
-    //export proxy_dequeue_shared_queue
-    public static StatusType ProxyDequeueSharedQueue(uint queueId, out byte returnValueData, out int returnValueSize)
-    {
-        returnValueData = 0;
-        returnValueSize = 0;
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_dequeue_shared_queue")]
+    static extern StatusType ProxyDequeueSharedQueue(uint queueId, out byte returnValueData, out int returnValueSize);
 
-    //export proxy_enqueue_shared_queue
-    public static StatusType ProxyEnqueueSharedQueue(uint queueId, byte valueData, int valueSize)
-    {
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_enqueue_shared_queue")]
+    static extern StatusType ProxyEnqueueSharedQueue(uint queueId, byte valueData, int valueSize);
 
-    //export proxy_get_header_map_value
-    public static StatusType ProxyGetHeaderMapValue(MapType map, byte keyData, int keySize, out byte returnValueData, out int returnValueSize)
-    {
-        returnValueData = 0;
-        returnValueSize = 0;
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_add_header_map_value")]
+    static extern StatusType ProxyGetHeaderMapValue(MapType map, byte keyData, int keySize, out byte returnValueData, out int returnValueSize);
 
-    //export proxy_add_header_map_value
-    public static StatusType ProxyAddHeaderMapValue(MapType map, byte keyData, int keySize, byte valueData, int valueSize)
-    {
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_add_header_map_value")]
+    static extern StatusType ProxyAddHeaderMapValue(MapType map, byte keyData, int keySize, byte valueData, int valueSize);
 
-    //export proxy_replace_header_map_value
-    public static StatusType ProxyReplaceHeaderMapValue(MapType map, byte keyData, int keySize, byte valueData, int valueSize)
-    {
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_replace_header_map_value")]
+    static extern StatusType ProxyReplaceHeaderMapValue(MapType map, byte keyData, int keySize, byte valueData, int valueSize);
 
-    //export proxy_remove_header_map_value
-    public static StatusType ProxyRemoveHeaderMapValue(MapType map, byte keyData, int keySize)
-    {
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_remove_header_map_value")]
+    static extern StatusType ProxyRemoveHeaderMapValue(MapType map, byte keyData, int keySize);
 
-    //export proxy_get_header_map_pairs
-    public static StatusType ProxyGetHeaderMapPairs(MapType map, out byte returnValueData, out int returnValueSize)
-    {
-        returnValueData = 0;
-        returnValueSize = 0;
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_get_header_map_pairs")]
+    static extern StatusType ProxyGetHeaderMapPairs(MapType map, out byte returnValueData, out int returnValueSize);
 
-    //export proxy_set_header_map_pairs
-    public static StatusType ProxySetHeaderMapPairs(MapType map, byte mapData, int mapSize)
-    {
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_set_header_map_pairs")]
+    static extern StatusType ProxySetHeaderMapPairs(MapType map, byte mapData, int mapSize);
 
-    //export proxy_get_buffer_bytes
-    public static StatusType ProxyGetBufferBytes(BufferType buffer, int start, int maxSize, byte returnBufferData, int returnBufferSize)
-    {
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_get_buffer_bytes")]
+    static extern StatusType ProxyGetBufferBytes(BufferType buffer, int start, int maxSize, out byte returnBufferData, out int returnBufferSize);
 
-    //export proxy_set_buffer_bytes
-    public static StatusType ProxySetBufferBytes(BufferType buffer, int start, int maxSize, byte bufferData, int bufferSize)
-    {
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_set_buffer_bytes")]
+    static extern StatusType ProxySetBufferBytes(BufferType buffer, int start, int maxSize, byte bufferData, int bufferSize);
 
-    //export proxy_continue_stream
-    public static StatusType ProxyContinueStream(StreamType stream)
-    {
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_continue_stream")]
+    static extern StatusType ProxyContinueStream(StreamType stream);
 
-    //export proxy_close_stream
-    public static StatusType ProxyCloseStream(StreamType stream)
-    {
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_close_stream")]
+    static extern StatusType ProxyCloseStream(StreamType stream);
 
-    //export proxy_http_call
-    public static StatusType ProxyHttpCall(byte upstreamData, int upstreamSize, byte headerData, int headerSize, byte bodyData, int bodySize, byte trailersData, int trailersSize, uint timeout, out uint calloutIdPtr)
-    {
-        calloutIdPtr = 0;
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_http_call")]
+    static extern StatusType ProxyHttpCall(byte upstreamData, int upstreamSize, byte headerData, int headerSize, byte bodyData, int bodySize, byte trailersData, int trailersSize, uint timeout, out uint calloutIdPtr);
 
-    //export proxy_call_foreign_function
-    public static StatusType ProxyCallForeignFunction(byte funcNamePtr, int funcNameSize, byte paramPtr, int paramSize, out byte returnData, out int returnSize)
-    {
-        returnData = 0;
-        returnSize = 0;
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_call_foreign_function")]
+    static extern StatusType ProxyCallForeignFunction(byte funcNamePtr, int funcNameSize, byte paramPtr, int paramSize, out byte returnData, out int returnSize);
 
-    //export proxy_set_tick_period_milliseconds
-    public static StatusType ProxySetTickPeriodMilliseconds(uint period)
-    {
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_set_tick_period_milliseconds")]
+    static extern StatusType ProxySetTickPeriodMilliseconds(uint period);
 
-    //export proxy_set_effective_context
-    public static StatusType ProxySetEffectiveContext(uint contextId)
-    {
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_set_effective_context")]
+    static extern StatusType ProxySetEffectiveContext(uint contextId);
 
-    //export proxy_done
-    public static StatusType ProxyDone()
-    {
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_done")]
+    static extern StatusType ProxyDone();
 
-    //export proxy_define_metric
-    public static StatusType ProxyDefineMetric(uint metric, byte metricNameData, int metricNameSize, uint returnMetricIdPtr)
-    {
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_define_metric")]
+    static extern StatusType ProxyDefineMetric(MetricType metric, byte metricNameData, int metricNameSize, out uint returnMetricIdPtr);
 
-    //export proxy_increment_metric
-    public static StatusType ProxyIncrementMetric(uint metricId, Int64 offset)
-    {
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_increment_metric")]
+    static extern StatusType ProxyIncrementMetric(uint metricId, long offset);
 
-    //export proxy_record_metric
-    public static StatusType ProxyRecordMetric(uint metricId, Int64 offset)
-    {
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_record_metric")]
+    static extern StatusType ProxyRecordMetric(uint metricId, long offset);
 
-    //export proxy_get_metric
-    public static StatusType ProxyGetMetric(uint metricId, UInt64 returnMetricValue)
-    {
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_get_metric")]
+    static extern StatusType ProxyGetMetric(uint metricId, out ulong returnMetricValue);
 
-    //export proxy_get_property
-    public static StatusType ProxyGetProperty(byte pathData, int pathSize, out byte returnValueData, out int returnValueSize)
-    {
-        returnValueData = 0;
-        returnValueSize = 0;
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_get_property")]
+    static extern StatusType ProxyGetProperty(byte pathData, int pathSize, out byte returnValueData, out int returnValueSize);
 
-    //export proxy_set_property
-    public static StatusType ProxySetProperty(byte pathData, int pathSize, byte valueData, int valueSize)
-    {
-        return StatusType.OK;
-    }
+    [DllImport("proxywasm", EntryPoint = "proxy_set_property")]
+    static extern StatusType ProxySetProperty(byte pathData, int pathSize, byte valueData, int valueSize);
+
 }
