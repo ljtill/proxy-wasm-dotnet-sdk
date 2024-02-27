@@ -1,6 +1,4 @@
-using ProxyWasm.SDK.Exceptions;
-
-namespace ProxyWasm.SDK.Helpers;
+namespace ProxyWasm.SDK;
 
 public class StatusHelper
 {

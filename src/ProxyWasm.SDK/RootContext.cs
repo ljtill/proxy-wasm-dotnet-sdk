@@ -4,9 +4,8 @@ public class RootContext
 {
     public IVMContext VMContext { get; set; }
     public Dictionary<uint, PluginContextState> PluginContexts { get; set; }
-    public Dictionary<uint, ITcpContext> TcpContexts { get; set; }
     public Dictionary<uint, IHttpContext> HttpContexts { get; set; }
-
+    public Dictionary<uint, ITcpContext> TcpContexts { get; set; }
     public Dictionary<uint, uint> ContextIdToRootId { get; }
     public uint ActiveContextId { get; set; }
 
@@ -17,16 +16,6 @@ public class RootContext
         TcpContexts = [];
         HttpContexts = [];
         ContextIdToRootId = [];
-    }
-
-    public void RegisterHttpCallOut(uint calloutId, Action<int, int, int> callback)
-    {
-        var pluginContext = PluginContexts[ContextIdToRootId[ActiveContextId]];
-        pluginContext.HttpCallbacks[calloutId] = new HttpCallbackAttribute
-        {
-            Callback = callback,
-            CallerContextId = ActiveContextId
-        };
     }
 
     public void CreatePluginContext(uint contextId)
@@ -63,9 +52,24 @@ public class RootContext
         return true;
     }
 
+    public void RegisterHttpCallOut(uint calloutId, Action<int, int, int> callback)
+    {
+        var pluginContext = PluginContexts[ContextIdToRootId[ActiveContextId]];
+        pluginContext.HttpCallbacks[calloutId] = new HttpCallbackAttribute
+        {
+            Callback = callback,
+            CallerContextId = ActiveContextId
+        };
+    }
+
     public void SetActiveContextId(uint contextId)
     {
         ActiveContextId = contextId;
+    }
+
+    public void SetVMContext(IVMContext vmContext)
+    {
+        VMContext = vmContext;
     }
 }
 

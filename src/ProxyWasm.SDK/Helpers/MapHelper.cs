@@ -1,4 +1,4 @@
-namespace ProxyWasm.SDK.Helpers;
+namespace ProxyWasm.SDK;
 
 public static class MapHelper
 {

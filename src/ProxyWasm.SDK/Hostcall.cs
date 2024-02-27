@@ -1,8 +1,6 @@
-using ProxyWasm.SDK.Helpers;
-
 namespace ProxyWasm.SDK;
 
-public class Hostcall
+public static class Hostcall
 {
     public static byte[] GetVMConfiguration()
     {

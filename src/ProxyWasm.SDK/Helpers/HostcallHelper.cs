@@ -1,7 +1,7 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace ProxyWasm.SDK.Helpers;
+namespace ProxyWasm.SDK;
 
 public static class HostcallHelper
 {

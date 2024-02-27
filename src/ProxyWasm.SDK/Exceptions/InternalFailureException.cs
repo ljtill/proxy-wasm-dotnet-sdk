@@ -1,4 +1,4 @@
-namespace ProxyWasm.SDK.Exceptions;
+namespace ProxyWasm.SDK;
 
 public class InternalFailureException : Exception
 {

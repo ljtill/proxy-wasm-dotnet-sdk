@@ -1,4 +1,4 @@
-namespace ProxyWasm.SDK.Helpers;
+namespace ProxyWasm.SDK;
 
 public static class BufferHelper
 {
@@ -10,7 +10,7 @@ public static class BufferHelper
             case StatusType.OK:
                 if (returnData == 0)
                 {
-                    throw new Exceptions.NotFoundException();
+                    throw new NotFoundException();
                 }
                 return HostcallHelper.RawByteToByteArray(returnData, returnSize);
             default:

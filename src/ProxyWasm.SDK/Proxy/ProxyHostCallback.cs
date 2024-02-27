@@ -4,6 +4,8 @@ namespace ProxyWasm.SDK;
 
 static class ProxyHostCallback
 {
+    static RootContext rootContext;
+
     [UnmanagedCallersOnly(EntryPoint = "proxy_on_memory_allocate")]
     static byte ProxyOnMemoryAllocate(uint size)
     {
@@ -12,30 +14,30 @@ static class ProxyHostCallback
     }
 
     [UnmanagedCallersOnly(EntryPoint = "proxy_on_vm_start")]
-    static OnVMStartType ProxyOnVMStart(RootContext currentContextState, int vmConfigurationSize)
+    static OnVMStartType ProxyOnVMStart(int vmConfigurationSize)
     {
-        return currentContextState.VMContext.OnVMStart(vmConfigurationSize);
+        return rootContext.VMContext.OnVMStart(vmConfigurationSize);
     }
 
     [UnmanagedCallersOnly(EntryPoint = "proxy_on_configure")]
-    static OnPluginStartType ProxyOnConscfigure(RootContext currentContextState, uint pluginContextId, int pluginConfigurationSize)
+    static OnPluginStartType ProxyOnConscfigure(uint pluginContextId, int pluginConfigurationSize)
     {
-        var pluginContext = currentContextState.PluginContexts[pluginContextId];
-        currentContextState.SetActiveContextId(pluginContextId);
+        var pluginContext = rootContext.PluginContexts[pluginContextId];
+        rootContext.SetActiveContextId(pluginContextId);
 
         return pluginContext.Context.OnPluginStart(pluginConfigurationSize);
     }
 
     [UnmanagedCallersOnly(EntryPoint = "proxy_on_context_create")]
-    static void ProxyOnContextCreate(RootContext contextState, uint contextId, uint pluginContextId)
+    static void ProxyOnContextCreate(uint contextId, uint pluginContextId)
     {
         if (pluginContextId == 0)
         {
-            contextState.CreatePluginContext(contextId);
+            rootContext.CreatePluginContext(contextId);
         }
-        else if (contextState.CreateHttpContext(contextId, pluginContextId))
+        else if (rootContext.CreateHttpContext(contextId, pluginContextId))
         { }
-        else if (contextState.CreateTcpContext(contextId, pluginContextId))
+        else if (rootContext.CreateTcpContext(contextId, pluginContextId))
         { }
         else
         {
@@ -44,30 +46,30 @@ static class ProxyHostCallback
     }
 
     [UnmanagedCallersOnly(EntryPoint = "proxy_on_log")]
-    static void ProxyOnLog(RootContext contextState, uint contextId)
+    static void ProxyOnLog(uint contextId)
     {
-        var tcpContext = contextState.TcpContexts[contextId];
+        var tcpContext = rootContext.TcpContexts[contextId];
         if (tcpContext != null)
         {
-            contextState.SetActiveContextId(contextId);
+            rootContext.SetActiveContextId(contextId);
             tcpContext.OnStreamDone();
         }
 
-        var httpContext = contextState.HttpContexts[contextId];
+        var httpContext = rootContext.HttpContexts[contextId];
         if (httpContext != null)
         {
-            contextState.SetActiveContextId(contextId);
+            rootContext.SetActiveContextId(contextId);
             httpContext.OnStreamDone();
         }
     }
 
     [UnmanagedCallersOnly(EntryPoint = "proxy_on_done")]
-    static bool ProxyOnDone(RootContext contextState, uint contextId)
+    static bool ProxyOnDone(uint contextId)
     {
-        var pluginContext = contextState.PluginContexts[contextId];
+        var pluginContext = rootContext.PluginContexts[contextId];
         if (pluginContext != null)
         {
-            contextState.SetActiveContextId(contextId);
+            rootContext.SetActiveContextId(contextId);
             return pluginContext.Context.OnPluginDone();
         }
 
@@ -75,28 +77,28 @@ static class ProxyHostCallback
     }
 
     [UnmanagedCallersOnly(EntryPoint = "proxy_on_delete")]
-    static void ProxyOnDelete(RootContext contextState, uint contextId)
+    static void ProxyOnDelete(uint contextId)
     {
-        contextState.ContextIdToRootId.Remove(contextId);
-        contextState.TcpContexts.Remove(contextId);
-        contextState.HttpContexts.Remove(contextId);
-        contextState.PluginContexts.Remove(contextId);
+        rootContext.ContextIdToRootId.Remove(contextId);
+        rootContext.TcpContexts.Remove(contextId);
+        rootContext.HttpContexts.Remove(contextId);
+        rootContext.PluginContexts.Remove(contextId);
     }
 
     [UnmanagedCallersOnly(EntryPoint = "proxy_on_queue_ready")]
-    static void ProxyOnQueueReady(RootContext contextState, uint queueId)
+    static void ProxyOnQueueReady(uint queueId)
     {
-        var pluginContext = contextState.PluginContexts[queueId];
-        contextState.SetActiveContextId(queueId);
+        var pluginContext = rootContext.PluginContexts[queueId];
+        rootContext.SetActiveContextId(queueId);
 
         pluginContext.Context.OnQueueReady(queueId);
     }
 
     [UnmanagedCallersOnly(EntryPoint = "proxy_on_tick")]
-    static void ProxyOnTick(RootContext contextState, uint pluginContextId)
+    static void ProxyOnTick(uint pluginContextId)
     {
-        var pluginContext = contextState.PluginContexts[pluginContextId];
-        contextState.SetActiveContextId(pluginContextId);
+        var pluginContext = rootContext.PluginContexts[pluginContextId];
+        rootContext.SetActiveContextId(pluginContextId);
 
         pluginContext.Context.OnTick();
     }
