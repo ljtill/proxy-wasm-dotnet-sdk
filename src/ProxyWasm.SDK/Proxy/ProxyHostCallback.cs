@@ -2,9 +2,9 @@ using System.Runtime.InteropServices;
 
 namespace ProxyWasm.SDK;
 
-static class ProxyHostCallback
+public static class ProxyHostCallback
 {
-    static RootContext rootContext;
+    private static readonly RootContext rootContext = RootContext.Instance;
 
     [UnmanagedCallersOnly(EntryPoint = "proxy_on_memory_allocate")]
     static byte ProxyOnMemoryAllocate(uint size)

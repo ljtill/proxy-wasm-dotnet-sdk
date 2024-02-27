@@ -2,6 +2,7 @@ namespace ProxyWasm.SDK;
 
 public class RootContext
 {
+    private static RootContext? instance = null;
     public IVMContext VMContext { get; set; }
     public Dictionary<uint, PluginContextState> PluginContexts { get; set; }
     public Dictionary<uint, IHttpContext> HttpContexts { get; set; }
@@ -9,13 +10,22 @@ public class RootContext
     public Dictionary<uint, uint> ContextIdToRootId { get; }
     public uint ActiveContextId { get; set; }
 
-    public RootContext()
+    private RootContext()
     {
         VMContext = new DefaultVMContext();
         PluginContexts = [];
         TcpContexts = [];
         HttpContexts = [];
         ContextIdToRootId = [];
+    }
+
+    public static RootContext Instance
+    {
+        get
+        {
+            instance ??= new RootContext();
+            return instance;
+        }
     }
 
     public void CreatePluginContext(uint contextId)

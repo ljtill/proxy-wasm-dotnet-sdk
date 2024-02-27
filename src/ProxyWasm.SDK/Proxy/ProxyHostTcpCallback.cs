@@ -4,7 +4,7 @@ namespace ProxyWasm.SDK;
 
 static class ProxyHostTcpCallback
 {
-    static RootContext rootContext;
+    private static readonly RootContext rootContext = RootContext.Instance;
 
     [UnmanagedCallersOnly(EntryPoint = "proxy_on_new_connection")]
     static ActionType ProxyOnNewConnection(uint contextId)

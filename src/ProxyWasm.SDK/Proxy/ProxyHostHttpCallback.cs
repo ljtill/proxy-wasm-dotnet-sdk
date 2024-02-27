@@ -4,7 +4,7 @@ namespace ProxyWasm.SDK;
 
 static class ProxyHostHttpCallback
 {
-    static RootContext rootContext;
+    private static readonly RootContext rootContext = RootContext.Instance;
 
     [UnmanagedCallersOnly(EntryPoint = "proxy_on_request_headers")]
     static ActionType ProxyOnRequestHeaders(uint contextId, int numberHeaders, bool endOfStream)
